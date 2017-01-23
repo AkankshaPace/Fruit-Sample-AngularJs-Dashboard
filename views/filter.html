@@ -32,7 +32,7 @@
 						    <tr ng-repeat="re in dbRegion | filter:search">
 						      <td>{{re.continent}}</td>
 						      <td>
-						        <input type="checkbox" class="dbDataRegion" ng-model="re.select">
+						        <input type="checkbox" class="dbDataRegion" ng-model="re.select" ng-change="regionCheckboxChanged()">
 						      </td>
 						    </tr>
 						  </table>
@@ -58,13 +58,13 @@
 					<div class="col-md-6">
 						<div class ="table-wrapper">
 						  <h5 id="bckheading">Fruit Classification <input type="checkbox" id="checkAllCheckbox" 
-						         ng-model="selectAllFruitCls" 
+						         ng-model="selectAllFruitCls"
 						         ng-click="checkAllFruitCls()" /></h5>
 						  <table class="table">
 						    <tr ng-repeat="fc in dbFruitCls | filter:search">
 						      <td>{{fc.fruitClassification}}</td>
 						      <td>
-						        <input type="checkbox" class="dbDataFruitCls" ng-model="fc.select">
+						        <input type="checkbox" class="dbDataFruitCls" ng-model="fc.select" ng-change="fruitCheckboxChanged()">
 						      </td>
 						    </tr>
 						  </table>

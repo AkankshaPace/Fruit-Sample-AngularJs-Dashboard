@@ -22,14 +22,14 @@ angular.module('controller',[])
 		.error(function(err){
 			console.log(err);
 		});
-	
+
 	$http.get('assets/getFruits.php')
-		.success(function(data){
-			$scope.dbFruit = data;	
-		})
-		.error(function(err){
-			console.log(err);
-		});
+			.success(function(data){
+				$scope.dbFruit = data;	
+			})
+			.error(function(err){
+				console.log(err);
+			});
 
 	$http.get('assets/getFruitCls.php')
 		.success(function(data){
@@ -39,6 +39,71 @@ angular.module('controller',[])
 			console.log(err);
 		});
 	
+	$scope.fruitCheckboxChanged = function(){
+		if(checkSelectedFruitCls().length > 0){
+			fruitClsSelected = checkSelectedFruitCls();
+			$http({
+				method: 'POST', 
+				url: 'assets/getFruits.php',
+				params: {
+				    fruitClassification: Array(fruitClsSelected)
+				},
+				headers: {
+				    'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			})
+			.success(function(data){
+				$scope.dbFruit = data;	
+			})
+			.error(function(err){
+				console.log(err);
+			});
+
+		}
+		else{
+			$http.get('assets/getFruits.php')
+			.success(function(data){
+				console.log(data);
+				$scope.dbFruit = data;	
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+	}
+
+	$scope.regionCheckboxChanged = function(){
+		if(checkSelectedRegion().length > 0){
+			regionSelected = checkSelectedRegion();
+			$http({
+				method: 'POST', 
+				url: 'assets/getCountries.php',
+				params: {
+				    region: Array(regionSelected)
+				},
+				headers: {
+				    'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			})
+			.success(function(data){
+				$scope.dbCountries = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+
+		}
+		else{
+			$http.get('assets/getFruits.php')
+			.success(function(data){
+				console.log(data);
+				$scope.dbFruit = data;	
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+	}
 	$scope.checkAllCountry = function() {
 	    angular.forEach($scope.dbCountries, function(d) {
 	      d.select = $scope.selectAllCountry;

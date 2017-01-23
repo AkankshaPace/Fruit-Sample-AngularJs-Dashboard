@@ -1,6 +1,17 @@
 <?php
 require_once 'config.php';
-	$query = "SELECT distinct(fruitName) from bloomberg.fruits ORDER BY ID ASC";
+$where = " where 1=1 ";
+
+if(isset($_GET["fruitClassification"])){
+	$fruitCls = $_GET["fruitClassification"];
+	$fruitClss = substr($fruitCls, 2, -2);
+	$fruitClss = str_replace('"',"'", $fruitClss);
+
+	if(strlen($fruitClss)>0)
+		$where .= " and fruitClassification IN ('". $fruitClss. "')";
+}
+
+	$query = "SELECT distinct(fruitName) from bloomberg.fruits".$where."ORDER BY ID ASC";
 	$result = $con->query($query);
 	$data = array();
 	if($result->num_rows > 0) {
