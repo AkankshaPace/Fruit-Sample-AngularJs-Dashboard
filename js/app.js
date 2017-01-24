@@ -10,12 +10,7 @@
 				controller  : 'dbController'
 			})
 
-			.when('/data', {
-				templateUrl : 'views/content.html',
-				controller  : 'dbController'
-			})
-
-			 .otherwise({
+			.otherwise({
 		        templateUrl: 'views/404.html'
 		    });
 	});

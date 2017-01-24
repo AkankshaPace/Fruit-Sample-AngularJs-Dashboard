@@ -4,48 +4,85 @@ angular.module('controller',[])
 	$scope.active = 'Monthly';
     $scope.setActive = function(type) {
         $scope.active = type;
-        console.log(type);
     };
 
-	$http.get('assets/getCountries.php')
-		.success(function(data){
-			$scope.dbCountries = data;	
-		})
-		.error(function(err){
-			console.log(err);
-		});
+    $http({
+		method: 'POST', 
+		url: 'assets/getData.php',
+		params: {
+		    var: 'Fruits'
+		},
+		headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded'
+		}
+	})
+	.success(function(data){
+		$scope.dbFruit = data;	
+	})
+	.error(function(err){
+		console.log(err);
+	});
 
-	$http.get('assets/getRegion.php')
-		.success(function(data){
-			$scope.dbRegion = data;	
-		})
-		.error(function(err){
-			console.log(err);
-		});
+	$http({
+		method: 'POST', 
+		url: 'assets/getData.php',
+		params: {
+		    var: 'FruitCls'
+		},
+		headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded'
+		}
+	})
+	.success(function(data){
+		$scope.dbFruitCls = data;	
+	})
+	.error(function(err){
+		console.log(err);
+	});
 
-	$http.get('assets/getFruits.php')
-			.success(function(data){
-				$scope.dbFruit = data;	
-			})
-			.error(function(err){
-				console.log(err);
-			});
+	$http({
+		method: 'POST', 
+		url: 'assets/getData.php',
+		params: {
+		    var: 'Countries'
+		},
+		headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded'
+		}
+	})
+	.success(function(data){
+		$scope.dbCountries = data;	
+	})
+	.error(function(err){
+		console.log(err);
+	});
 
-	$http.get('assets/getFruitCls.php')
-		.success(function(data){
-			$scope.dbFruitCls = data;	
-		})
-		.error(function(err){
-			console.log(err);
-		});
-	
+	$http({
+		method: 'POST', 
+		url: 'assets/getData.php',
+		params: {
+		    var: 'Region'
+		},
+		headers: {
+		    'Content-Type': 'application/x-www-form-urlencoded'
+		}
+	})
+	.success(function(data){
+		$scope.dbRegion = data;	
+	})
+	.error(function(err){
+		console.log(err);
+	});
+
+
 	$scope.fruitCheckboxChanged = function(){
 		if(checkSelectedFruitCls().length > 0){
 			fruitClsSelected = checkSelectedFruitCls();
 			$http({
 				method: 'POST', 
-				url: 'assets/getFruits.php',
+				url: 'assets/getData.php',
 				params: {
+					var: 'Fruits',
 				    fruitClassification: Array(fruitClsSelected)
 				},
 				headers: {
@@ -61,9 +98,17 @@ angular.module('controller',[])
 
 		}
 		else{
-			$http.get('assets/getFruits.php')
+			 $http({
+				method: 'POST', 
+				url: 'assets/getData.php',
+				params: {
+				    var: 'Fruits'
+				},
+				headers: {
+				    'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			})
 			.success(function(data){
-				console.log(data);
 				$scope.dbFruit = data;	
 			})
 			.error(function(err){
@@ -77,8 +122,9 @@ angular.module('controller',[])
 			regionSelected = checkSelectedRegion();
 			$http({
 				method: 'POST', 
-				url: 'assets/getCountries.php',
+				url: 'assets/getData.php',
 				params: {
+					var: 'Countries',
 				    region: Array(regionSelected)
 				},
 				headers: {
@@ -94,9 +140,17 @@ angular.module('controller',[])
 
 		}
 		else{
-			$http.get('assets/getFruits.php')
+			$http({
+				method: 'POST', 
+				url: 'assets/getData.php',
+				params: {
+				    var: 'Countries'
+				},
+				headers: {
+				    'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			})
 			.success(function(data){
-				console.log(data);
 				$scope.dbFruit = data;	
 			})
 			.error(function(err){
@@ -171,11 +225,9 @@ angular.module('controller',[])
 	    var regions = angular.forEach(selectedRegion, function(re){
 	    	if(re.select){
 	    		region[i++] = re.continent;
-	    		//console.log(re);
 	    	}
 	    	
 	    });
-	    console.log(region);
 	    return region;
 	    
 	}
@@ -193,8 +245,6 @@ angular.module('controller',[])
 	    		country[i++] = d.countryName;
 	    	}
 	    });
-	    
-	    console.log(country);
 	    return country;
 	}  
 
@@ -211,8 +261,6 @@ angular.module('controller',[])
 	    		fruit[i++] = f.fruitName;
 	    	}
 	    });
-	    
-	    console.log(fruit);
 	    return fruit;
 	}  
 
@@ -229,7 +277,6 @@ angular.module('controller',[])
 	    		fruitCls[i++] = fc.fruitClassification;
 	    	}
 	    });
-	    console.log(fruitCls);
 	    return fruitCls;
 	}  
 
@@ -240,8 +287,9 @@ angular.module('controller',[])
   	 	SFruitCls = checkSelectedFruitCls();
   	 	$http({
 			method: 'POST', 
-			url: 'assets/getValues.php',
+			url: 'assets/getData.php',
 			params: {
+				var: 'Quantity',
 			    region: Array(SRegion),
 			    country: Array(SCountry),
 			    fruit: Array(SFruit),
@@ -324,8 +372,9 @@ angular.module('controller',[])
 
 		$http({
 			method: 'POST', 
-			url: 'assets/getValues2.php',
+			url: 'assets/getData.php',
 			params: {
+				var: 'Revenue',
 			    region: Array(SRegion),
 			    country: Array(SCountry),
 			    fruit: Array(SFruit),
