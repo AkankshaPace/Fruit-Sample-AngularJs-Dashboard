@@ -151,7 +151,7 @@ angular.module('controller',[])
 				}
 			})
 			.success(function(data){
-				$scope.dbFruit = data;	
+				$scope.dbCountries = data;	
 			})
 			.error(function(err){
 				console.log(err);
